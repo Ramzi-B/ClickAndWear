@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@fontsource-variable/inter':
+        specifier: ^5.1.1
+        version: 5.1.1
+      '@fontsource/lusitana':
+        specifier: ^5.1.1
+        version: 5.1.1
       '@tailwindcss/postcss':
         specifier: ^4.0.6
         version: 4.0.6
@@ -604,6 +610,12 @@ packages:
   '@discoveryjs/json-ext@0.5.7':
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
     engines: {node: '>=10.0.0'}
+
+  '@fontsource-variable/inter@5.1.1':
+    resolution: {integrity: sha512-OpXFTmiH6tHkYijMvQTycFKBLK4X+SRV6tet1m4YOUH7SzIIlMqDja+ocDtiCA72UthBH/vF+3ZtlMr2rN/wIw==}
+
+  '@fontsource/lusitana@5.1.1':
+    resolution: {integrity: sha512-G9aETtxW44MY1eZJWzyygdUeQihv4bb/bItKton1EibPJhGg1tRz2cF49SFOWlrhXxu+tT8LU3oKOBsEYRb+lw==}
 
   '@hotwired/stimulus-webpack-helpers@1.0.1':
     resolution: {integrity: sha512-wa/zupVG0eWxRYJjC1IiPBdt3Lruv0RqGN+/DTMmUWUyMAEB27KXmVY6a8YpUVTM7QwVuaLNGW4EqDgrS2upXQ==}
@@ -2926,6 +2938,10 @@ snapshots:
       '@babel/helper-validator-identifier': 7.25.9
 
   '@discoveryjs/json-ext@0.5.7': {}
+
+  '@fontsource-variable/inter@5.1.1': {}
+
+  '@fontsource/lusitana@5.1.1': {}
 
   '@hotwired/stimulus-webpack-helpers@1.0.1(@hotwired/stimulus@3.2.2)':
     dependencies:
