@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProductVariantRepository;
@@ -35,6 +37,28 @@ class ProductVariant
     #[ORM\ManyToOne(inversedBy: 'variants')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
+
+    #[ORM\ManyToOne(inversedBy: 'variants')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Size $size = null;
+
+    /**
+     * @var Collection<int, Color>
+     */
+    #[ORM\ManyToMany(targetEntity: Color::class, inversedBy: 'variants')]
+    private Collection $colors;
+
+    /**
+     * @var Collection<int, Material>
+     */
+    #[ORM\ManyToMany(targetEntity: Material::class, inversedBy: 'variants')]
+    private Collection $materials;
+
+    public function __construct()
+    {
+        $this->colors = new ArrayCollection();
+        $this->materials = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -121,6 +145,66 @@ class ProductVariant
     public function setProduct(?Product $product): static
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getSize(): ?Size
+    {
+        return $this->size;
+    }
+
+    public function setSize(?Size $size): static
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Color>
+     */
+    public function getColors(): Collection
+    {
+        return $this->colors;
+    }
+
+    public function addColor(Color $color): static
+    {
+        if (!$this->colors->contains($color)) {
+            $this->colors->add($color);
+        }
+
+        return $this;
+    }
+
+    public function removeColor(Color $color): static
+    {
+        $this->colors->removeElement($color);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Material>
+     */
+    public function getMaterials(): Collection
+    {
+        return $this->materials;
+    }
+
+    public function addMaterial(Material $material): static
+    {
+        if (!$this->materials->contains($material)) {
+            $this->materials->add($material);
+        }
+
+        return $this;
+    }
+
+    public function removeMaterial(Material $material): static
+    {
+        $this->materials->removeElement($material);
 
         return $this;
     }
