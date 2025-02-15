@@ -3,10 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Size;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class SizeCrudController extends AbstractCrudController
 {
@@ -15,14 +15,24 @@ class SizeCrudController extends AbstractCrudController
         return Size::class;
     }
 
-    /*
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setPageTitle('index', 'Liste des %entity_label_plural%')
+            ->setPageTitle('new', 'Créer une nouvelle Taille')
+            ->setPageTitle('detail', fn (Size $size) => sprintf('La taille <b>%s</b>', $size->getName()))
+            ->setPageTitle('edit', fn (Size $size ) => sprintf('Modifier la taille <b>%s</b>', $size->getName()))
+            ->setEntityLabelInSingular('Taille')
+            ->setEntityLabelInPlural('Tailles')
+        ;
+    }
+
     public function configureFields(string $pageName): iterable
     {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
+        // Id
+        yield IdField::new('id')->hideOnForm()->hideOnIndex();
+
+        // Name
+        yield TextField::new('name', 'Nom de la taille');
     }
-    */
 }
