@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Enum\GenderEnum;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -63,6 +64,9 @@ class Product
      */
     #[ORM\OneToMany(targetEntity: ProductImage::class, mappedBy: 'product', cascade: ['persist', 'remove'])]
     private Collection $images;
+
+    #[ORM\Column(type: 'string', length: 10, enumType: GenderEnum::class)]
+    private ?GenderEnum $gender = null;
 
     public function __construct()
     {
@@ -265,6 +269,18 @@ class Product
                 $image->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGender(): ?GenderEnum
+    {
+        return $this->gender;
+    }
+
+    public function setGender(?GenderEnum $gender): static
+    {
+        $this->gender = $gender;
 
         return $this;
     }
