@@ -6,6 +6,7 @@ use App\Entity\ProductImage;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -23,6 +24,9 @@ class ProductImageCrudController extends AbstractCrudController
         return $crud
             ->setPageTitle('index', 'Liste des %entity_label_plural%')
             ->setPageTitle('new', 'Ajouter une image')
+            ->setPageTitle('detail', fn(ProductImage $productImage) => sprintf(
+                'L\'image de l\'article <b>%s</b>', $productImage->getProduct()
+            ))
             ->setPageTitle('edit', fn (ProductImage $productImage) => sprintf(
                 'Modifier l\'image de l\'article <b>%s</b>', $productImage->getProduct()
             ))
@@ -44,5 +48,8 @@ class ProductImageCrudController extends AbstractCrudController
 
         // Url image preview
         yield ImageField::new('url', 'Aperçu')->setBasePath('/uploads/products')->hideOnForm();
+
+        // Alt text
+        yield TextField::new('altHtml', 'Alt HTML')->setHelp('Le texte alt de l\'image');
     }
 }

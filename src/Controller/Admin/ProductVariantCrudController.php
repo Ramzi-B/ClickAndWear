@@ -23,7 +23,10 @@ class ProductVariantCrudController extends AbstractCrudController
         return $crud
             ->setPageTitle('index', 'Liste des %entity_label_plural%')
             ->setPageTitle('new', 'Créer une nouvelle variante')
-            ->setPageTitle('edit', fn (ProductVariant $productVariant) => sprintf(
+            ->setPageTitle('detail', fn(ProductVariant $productVariant) => sprintf(
+                'La variante <b>%s</b>', $productVariant->getSku(), $productVariant->getProduct()
+            ))
+            ->setPageTitle('edit', fn(ProductVariant $productVariant) => sprintf(
                 'Modifier la variante <b>%s</b>', $productVariant->getSku(), $productVariant->getProduct()
             ))
             ->setEntityLabelInSingular('Variante')
@@ -39,7 +42,7 @@ class ProductVariantCrudController extends AbstractCrudController
         // Product
         yield AssociationField::new('product', 'Produit')
             ->setCrudController(ProductCrudController::class)
-            ->setHelp('Sélectionner le produit pour laquelle vous voulez créer une variante')
+            ->setHelp('Sélectionner le produit pour lequel vous voulez créer une variante')
             ->setRequired(true)
             ->autocomplete()
         ;
@@ -66,7 +69,7 @@ class ProductVariantCrudController extends AbstractCrudController
             ->formatValue(function($value, $entity) {
                 if ($entity->getColors()) {
                     // Retrieve color names and concatenate them
-                    return implode(', ', $entity->getColors()->map(fn ($color) => $color->getName())->toArray());
+                    return implode(', ', $entity->getColors()->map(fn($color) => $color->getName())->toArray());
                 }
                 return '';
             })->autocomplete()
@@ -82,7 +85,7 @@ class ProductVariantCrudController extends AbstractCrudController
             ->formatValue(function($value, $entity) {
                 if ($entity->getMaterials()) {
                     // Retrieve material names and concatenate them
-                    return implode(', ', $entity->getMaterials()->map(fn ($material) => $material->getName())->toArray());
+                    return implode(', ', $entity->getMaterials()->map(fn($material) => $material->getName())->toArray());
                 }
                 return '';
             })->autocomplete()

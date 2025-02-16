@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Trait\TimestampableTrait;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\ProductVariantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -56,6 +57,36 @@ class ProductVariant
     {
         $this->colors = new ArrayCollection();
         $this->materials = new ArrayCollection();
+    }
+
+    #[ORM\PrePersist]
+    public function prePersist(): void
+    {
+        $this->sku ??= $this->generateSku();
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdate(): void
+    {
+        // Regenerate the SKU only if the size, product or colour changes
+        if ($this->product || $this->size || !$this->sku) {
+            $this->sku = $this->generateSku();
+        }
+    }
+
+    public function generateSku(): string
+    {
+        if (!$this->product || !$this->size) {
+            throw new \LogicException('Product and size are required to generate an SKU.');
+        }
+
+        $productName = strtoupper(str_replace(' ', '-', preg_replace('/[^A-Za-z0-9]/', '', $this->product->getName())));
+        $brandCode = strtoupper(substr($this->product->getBrand()->getName(), 0, 3));
+        $genderCode = strtoupper(substr($this->product->getGenderLabel(), 0, 1));
+        $sizeCode = strtoupper($this->size->getName());
+        $colorNames = implode('-', $this->colors->map(fn($color) => strtoupper($color->getName()))->toArray());
+
+        return sprintf('%s-%s-%s-%s-%s', $productName, $brandCode, $colorNames, $sizeCode, $genderCode);
     }
 
     public function getId(): ?int
@@ -181,5 +212,10 @@ class ProductVariant
         $this->materials->removeElement($material);
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->sku ?? '' . ' - ' . $this->product->getName();
     }
 }

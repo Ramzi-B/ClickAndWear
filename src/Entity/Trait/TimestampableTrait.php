@@ -13,14 +13,14 @@ trait TimestampableTrait
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\PrePersist]
-    public function prePersist(): void
+    public function prePersistTimestamps(): void
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
     }
 
     #[ORM\PreUpdate]
-    public function preUpdate(): void
+    public function preUpdateTimestamps(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
     }

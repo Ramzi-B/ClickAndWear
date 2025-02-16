@@ -74,6 +74,23 @@ class Product
         $this->images = new ArrayCollection();
     }
 
+    /**
+     * @return string|null The label associated with the gender.
+     *                     null if the gender is null.
+     */
+    public function getGenderLabel(): ?string
+    {
+        return $this->gender?->getLabel();
+    }
+    
+    /**
+     * @return string|null the url of the first image if it exists, null otherwise
+     */
+    public function getFirstImage(): ?string
+    {
+        return $this->images->first() ? $this->images->first()->getUrl() : null;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -257,5 +274,10 @@ class Product
         $this->gender = $gender;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

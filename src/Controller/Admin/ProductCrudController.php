@@ -30,9 +30,8 @@ class ProductCrudController extends AbstractCrudController
         return $crud->setDefaultSort(['isActive' => 'DESC', 'name' => 'ASC'])
             ->setPageTitle('index', 'Liste des %entity_label_plural%')
             ->setPageTitle('new', 'Créer un nouveau produit')
-            ->setPageTitle('edit', fn (Product $product) => sprintf(
-                'Modifier le produit <b>%s</b>', $product->getName()
-            ))
+            ->setPageTitle('detail', fn(Product $product) => sprintf('Produit <b>%s</b>', $product->getName()))
+            ->setPageTitle('edit', fn(Product $product) => sprintf('Modifier le produit <b>%s</b>', $product->getName()))
             ->setEntityLabelInSingular('Produit')
             ->setEntityLabelInPlural('Produits')
         ;
@@ -51,7 +50,7 @@ class ProductCrudController extends AbstractCrudController
             ->setFormType(EnumType::class)
             ->setFormTypeOptions([
                 'class' => GenderEnum::class,
-                'choice_label' => fn (GenderEnum $gender): string => $gender->getLabel(),
+                'choice_label' => fn(GenderEnum $gender): string => $gender->getLabel(),
             ])
         ;
 
@@ -75,7 +74,7 @@ class ProductCrudController extends AbstractCrudController
             ->formatValue(function($value, $entity) {
                 if ($entity->getCategories()) {
                     // Retrieve category names and concatenate them
-                    return implode(', ', $entity->getCategories()->map(fn ($category) => $category->getName())->toArray());
+                    return implode(', ', $entity->getCategories()->map(fn($category) => $category->getName())->toArray());
                 }
                 return ''; // Return an empty string if there are no categories
             })->autocomplete()
@@ -86,7 +85,7 @@ class ProductCrudController extends AbstractCrudController
             ->formatValue(function($value, $entity) {
                 if ($entity->getTags()) {
                     // Retrieve tag names and concatenate them
-                    return implode(', ', $entity->getTags()->map(fn ($tag) => $tag->getName())->toArray());
+                    return implode(', ', $entity->getTags()->map(fn($tag) => $tag->getName())->toArray());
                 }
                 return '';
             })->autocomplete()
