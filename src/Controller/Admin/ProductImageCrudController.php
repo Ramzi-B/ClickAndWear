@@ -38,7 +38,7 @@ class ProductImageCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         // Product associated
-        yield AssociationField::new('product', 'Produit associé');
+        yield AssociationField::new('product', 'Produit associé')->setHelp('Sélectionner le produit pour lequel vous voulez ajouter une image');
 
         // Image file upload
         yield Field::new('imageFile', 'Image')->setFormType(VichImageType::class)->onlyOnForms();
