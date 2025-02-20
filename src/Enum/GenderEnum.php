@@ -8,13 +8,21 @@ namespace App\Enum;
  */
 enum GenderEnum: string
 {
-    case MEN = 'men';
-    case WOMEN = 'women';
+    // case MEN = 'men';
+    // case WOMEN = 'women';
+    // case UNISEX = 'unisex';
+    // case KIDS = 'kids';
+    // case BABY = 'baby';
+    // case BOY = 'boy';
+    // case GIRL = 'girl';
+
+    case MEN = 'homme';
+    case WOMEN = 'femme';
     case UNISEX = 'unisex';
-    case KIDS = 'kids';
-    case BABY = 'baby';
-    case BOY = 'boy';
-    case GIRL = 'girl';
+    case KIDS = 'enfant';
+    case BABY = 'bebe';
+    case BOY = 'garcon';
+    case GIRL = 'fille';
 
     /**
      * Get the label associated with the gender.

@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <section class="container mx-auto px-6 py-10 bg-white">
+
+        <h1 class="text-3xl font-bold pb-10">{{ product.name }}</h1>
+
+        <div class="grid grid-cols-2 gap-6">
+            <img src="{{ asset('uploads/products/' ~ product.firstImage) }}" 
+                alt="{{ product.altHtmlImage }}" 
+                class="object-cover bg-cover rounded-lg"
+            >
+
+            <div class="p-4">
+                <p class="text-gray-700">{{ product.brand|capitalize }}</p>
+                <p class="text-gray-500">{{ product.gender.value|capitalize }}</p>
+                {# <p class="text-2xl font-semibold mt-4">{{ (product.variants|first.price / 100)|number_format(2, ',', ' ') }} €</p> #}
+
+                {% set firstVariant = product.variants|first %}
+                {% if firstVariant %}
+                    <p class="text-2xl font-semibold mt-4">{{ firstVariant.formattedPrice }}</p>
+                {% else %}
+                    <p class="text-sm font-medium text-gray-900">Prix non disponible</p>
+                {% endif %}
+                
+                <!-- Sélection des variantes -->
+                <label class="block mt-4">Taille </label>
+                <select class="w-full border rounded-md p-2">
+                    {% for variant in product.variants %}
+                        <option value="{{ variant.id }}">{{ variant.size.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- Sélection des couleurs -->
+                <label class="block mt-4 text-gray-700">Couleur </label>
+                <div class="flex space-x-2">
+                    {% for variant in product.variants %}
+                        {% for color in variant.colors %}
+                            <button class="w-8 h-8 rounded-full border" style="background-color: {{ color.hexcode }};"></button>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+
+                <!-- Bouton Ajouter au panier -->
+                <button class="mt-6 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                    Ajouter au panier
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}

@@ -91,6 +91,11 @@ class Product
         return $this->images->first() ? $this->images->first()->getUrl() : null;
     }
 
+    public function getAltHtmlImage(): ?string
+    {
+        return $this->images->first() ? $this->images->first()->getAltHtml() : null;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

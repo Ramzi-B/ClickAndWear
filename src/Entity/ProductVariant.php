@@ -74,6 +74,25 @@ class ProductVariant
         }
     }
 
+    /**
+     * Format the price of the product variant, from cent to euro.
+     *
+     * @return string The formatted price.
+     */
+    public function getFormattedPrice(): string
+    {
+        if ($this->price === null) { return '0,00 €'; }
+
+        return number_format(((float) $this->price) / 100, 2, ',', ' ') . ' €';
+    }
+    
+    /**
+     * Generate a unique SKU for the product variant.
+     *
+     * @throws \LogicException If the product or size are not set.
+     *
+     * @return string
+     */
     public function generateSku(): string
     {
         if (!$this->product || !$this->size) {

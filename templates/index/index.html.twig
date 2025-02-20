@@ -4,6 +4,159 @@
 
 {% block body %}
 
+<header>
+    <nav class="bg-gray-800 text-white py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{{ path('app_index') }}" class="text-lg font-bold">Click&Wear</a>
+
+            <!-- CATEGORIES MENU -->
+            <ul class="flex">
+                <!-- Groupe Homme -->
+                <li class="relative group">
+                    <a href="#" class="hover:underline px-4 py-2">Homme</a>
+                    <ul class="absolute left-0 hidden bg-white text-gray-800 shadow-lg rounded-md py-2 group-hover:block">
+                        {% for category in categories_man %}
+                            <li class="relative group">
+                                <a href="{{ path('app_category_show_by_gender', { 'slug' : category.slug, 'gender' : 'homme' }) }}"
+                                    class="block px-4 py-2 hover:bg-gray-100"
+                                >
+                                    {{ category.name }}
+                                </a>
+                                {% if category.subCategories is not empty %}
+                                    <ul class="absolute left-full top-0 hidden bg-white text-gray-800 shadow-lg rounded-md py-2 group-hover:block">
+                                        {% for subCategory in category.subCategories %}
+                                            <li>
+                                                <a href="{{ path('app_category_show_by_gender', { 'slug' : subCategory.slug, 'gender' : 'homme' }) }}"
+                                                    class="block px-4 py-2 hover:bg-gray-100"
+                                                >
+                                                    {{ subCategory.name }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <!-- Groupe Femme -->
+                <li class="relative group">
+                    <a href="#" class="hover:underline px-4 py-2">Femme</a>
+                    <ul class="absolute left-0 hidden bg-white text-gray-800 shadow-lg rounded-md py-2 group-hover:block">
+                        {% for category in categories_woman %}
+                            <li class="relative group">
+                                <a href="{{ path('app_category_show_by_gender', { slug: category.slug, 'gender' : 'femme' }) }}" 
+                                    class="block px-4 py-2 hover:bg-gray-100"
+                                >
+                                    {{ category.name }}
+                                </a>
+                                {% if category.subCategories is not empty %}
+                                    <ul class="absolute left-full top-0 hidden bg-white text-gray-800 shadow-lg rounded-md py-2 group-hover:block">
+                                        {% for subCategory in category.subCategories %}
+                                            <li>
+                                                <a href="{{ path('app_category_show_by_gender', { slug: subCategory.slug, 'gender' : 'femme' }) }}"
+                                                    class="block px-4 py-2 hover:bg-gray-100"
+                                                >
+                                                    {{ subCategory.name }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <!-- Groupe Enfant -->
+                <li class="relative group">
+                    <a href="#" class="hover:underline px-4 py-2">Enfant</a>
+                    <ul class="absolute left-0 hidden bg-white text-gray-800 shadow-lg rounded-md py-2 group-hover:block">
+                        {% for category in categories_child %}
+                            <li class="relative group">
+                                <a href="{{ path('app_category_show_by_gender', { slug: category.slug, 'gender' : 'enfant' }) }}" 
+                                    class="block px-4 py-2 hover:bg-gray-100"
+                                >
+                                    {{ category.name }}
+                                </a>
+                                {% if category.subCategories is not empty %}
+                                    <ul class="absolute left-full top-0 hidden bg-white text-gray-800 shadow-lg rounded-md py-2 group-hover:block">
+                                        {% for subCategory in category.subCategories %}
+                                            <li>
+                                                <a href="{{ path('app_category_show_by_gender', { slug: subCategory.slug, 'gender' : 'enfant' }) }}"
+                                                    class="block px-4 py-2 hover:bg-gray-100"
+                                                >
+                                                    {{ subCategory.name }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <!-- TEST Groupe Enfant -->
+                {# <li class="relative group">
+                    <a href="#" class="hover:underline px-4 py-2">Enfant</a>
+                    <ul class="absolute left-0 hidden bg-white text-gray-800 shadow-lg rounded-md py-2 group-hover:block">
+                        {% for category in categories_child %}
+                            <li class="relative group">
+                                <a href="{{ path('app_category_show_by_gender', { slug: category.slug, 'gender': 'enfant' }) }}"
+                                    class="block px-4 py-2 hover:bg-gray-100"
+                                >
+                                    {{ category.name }}
+                                </a>
+                                {% if category.subCategories is not empty %}
+                                    <ul class="absolute left-full top-0 hidden bg-white text-gray-800 shadow-lg rounded-md py-2 group-hover:block">
+                                        {% for subCategory in category.subCategories %}
+                                            <li>
+                                                <!-- Le menu propose plusieurs choix de genres pour chaque sous-catégorie -->
+                                                <div class="px-4 py-2 hover:bg-gray-100  w-60">
+                                                    <span class="font-bold">{{ subCategory.name }}</span>
+                                                    <div class="ml-2 mt-1 space-y-1">
+                                                        <a href="{{ path('app_category_show_by_gender', { 'slug' : subCategory.slug, 'gender': 'enfant' }) }}"
+                                                            class="block px-2 py-1 text-sm hover:underline"
+                                                        >
+                                                            Tous les enfants
+                                                        </a>
+
+                                                        <a href="{{ path('app_category_show_by_gender', { 'slug' : subCategory.slug, 'gender': 'bebe' }) }}"
+                                                            class="block px-2 py-1 text-sm hover:underline"
+                                                        >
+                                                            Bébé
+                                                        </a>
+
+                                                        <a href="{{ path('app_category_show_by_gender', { 'slug' : subCategory.slug, 'gender': 'garcon' }) }}"
+                                                            class="block px-2 py-1 text-sm hover:underline"
+                                                        >
+                                                            Garçon
+                                                        </a>
+
+                                                        <a href="{{ path('app_category_show_by_gender', { 'slug' : subCategory.slug, 'gender': 'fille' }) }}"
+                                                            class="block px-2 py-1 text-sm hover:underline"
+                                                        >
+                                                            Fille
+                                                        </a>
+
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li> #}
+            </ul>
+
+        </div>
+    </nav>
+</header>
+
 <section class="container mx-auto py-10">
 
     <!-- HERO SECTION -->
@@ -14,6 +167,46 @@
 
     {# test react #}
     {# <div {{ react_component('Hello', {name: 'Symfony'}) }}></div> #}
+
+    <!-- PRODUITS EN VEDETTE -->
+    <div class="bg-white rounded-lg mt-10">
+        <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+            <h2 class="text-2xl font-bold tracking-tight text-gray-900">Produits en Vedette</h2>
+
+            <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+            {% for product in featuredProducts %}
+
+                <div class="group relative">
+                    <img src="{{ asset('uploads/products/' ~ product.firstImage) }}" alt=""
+                        class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
+                    >
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-gray-700">
+                                <a href="{{ path('app_product_show', { slug: product.slug }) }}">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    {{ product.name|capitalize }}
+                                </a>
+                            </h3>
+                        </div>
+
+                        {% set firstVariant = product.variants|first %}
+                        {% if firstVariant %}
+                            <p class="text-sm font-medium text-gray-900">{{ (firstVariant.formattedPrice) }}</p>
+                        {% else %}
+                            <p class="text-sm font-medium text-gray-900">Prix non disponible</p>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+            {% else %}
+                <p class="col-span-3 text-center text-gray-500">Aucun produit en vedette.</p>
+            {% endfor %}
+            </div>
+
+        </div>
+    </div>
 
 </section>
 
